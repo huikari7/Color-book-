@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Color Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;color-scheme:light;--bg:#fbf8f5;--card:#fffdfb;--ink:#3b3033;--mute:#9a8c8f;--line:#eee3df;--acc:#a9747a;--accbg:#f6e9e7;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:linear-gradient(180deg,#fdfaf7,#f7eeea);color:var(--ink);font:300 15px/1.45 Jost,-apple-system,"Helvetica Neue",sans-serif;display:flex;overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+aside{width:190px;flex:none;padding:20px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;overflow:auto}
+aside h1{font:500 30px/1 "Cormorant Garamond",Georgia,serif;margin:4px 8px 22px;letter-spacing:1.5px}
+.br{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:14px;border:0;background:none;text-align:left;cursor:pointer;font-weight:500}
+.br small{color:var(--mute);font-weight:400}
+.br.on{background:var(--acc);color:#fff}.br.on small{color:#fff9}
+main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{padding:16px 20px 8px;display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#q{flex:1;min-width:140px;padding:11px 16px;border-radius:24px;border:1px solid var(--line);background:var(--card);outline:none}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.chip{flex:none;padding:7px 14px;border-radius:20px;border:1px solid var(--line);background:var(--card);cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--accbg);border-color:var(--acc);color:var(--acc);font-weight:600}
+.btn{padding:9px 15px;border-radius:12px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.btn.p{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.d{color:#c0392b;border-color:#c0392b}
+#grid{flex:1;overflow:auto;padding:8px 20px 30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:14px;align-content:start}
+.c{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:14px 8px 12px;text-align:center;cursor:pointer;position:relative}
+.c:active{transform:scale(.97)}
+.c b{display:block;font-size:13px;margin-top:10px}
+.c span{display:block;font-size:12px;color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nail{width:58px;height:76px;margin:0 auto;border-radius:50% 50% 42% 42%/58% 58% 42% 42%;position:relative;box-shadow:inset 0 -6px 10px #0002,0 2px 6px #0002;overflow:hidden}
+.nail::after{content:"";position:absolute;left:14%;top:8%;width:26%;height:46%;border-radius:50%;background:linear-gradient(#fff9,#fff0);transform:rotate(12deg)}
+.nail.big{width:150px;height:196px}
+.glitter{background-image:radial-gradient(#fffd 1.2px,transparent 1.6px),radial-gradient(#fff8 1px,transparent 1.4px);background-size:11px 11px,17px 17px;background-position:0 0,5px 7px}
+.cat{background-image:linear-gradient(115deg,transparent 35%,#fff7 50%,transparent 65%)}
+.out::before{content:"Out of stock";position:absolute;top:8px;right:8px;font-size:11px;background:#8d8087;color:#fff;border-radius:8px;padding:1px 7px;z-index:2}
+.out .nail{filter:grayscale(.6) opacity(.6)}
+.empty{grid-column:1/-1;text-align:center;color:var(--mute);padding:60px 0}
+#ov{position:fixed;inset:0;background:rgba(60,45,50,.32);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:9}
+#ov.on{display:flex}
+#md{background:var(--card);border-radius:24px;padding:24px;width:min(520px,100%);max-height:92%;overflow:auto}
+#md h2{margin:0 0 14px;font-size:18px}
+.f{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;font-size:13px;color:var(--mute)}
+.f input,.f select,.f textarea{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-size:15px;color:var(--ink)}
+.f input[type=color]{padding:2px;height:44px;width:100%}
+.f textarea{min-height:140px;font-family:ui-monospace,monospace;font-size:13px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;flex-wrap:wrap}
+.det{text-align:center}.det h2{margin:14px 0 2px;font-size:22px}.det p{margin:2px 0;color:var(--mute)}
+.tag{display:inline-block;background:var(--accbg);color:var(--acc);border-radius:10px;padding:2px 10px;font-size:12px;margin:8px 3px 0}
+#grid.rib{display:block}
+.bar{height:54px;border-radius:16px;box-shadow:inset 0 0 0 1px #0001}
+.lab{display:flex;justify-content:space-between;color:var(--mute);font-size:12px;margin:6px 4px 14px}
+.strips{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));border-radius:18px;overflow:hidden}
+.s{height:210px;border:0;padding:0;position:relative;cursor:pointer}
+.s i{position:absolute;bottom:12px;left:50%;writing-mode:vertical-rl;transform:translateX(-50%) rotate(180deg);font:600 12px -apple-system,sans-serif;font-style:normal;letter-spacing:1px}
+.s.out{opacity:.35}
+.np{position:absolute;top:8px;left:9px;font-size:11px;font-style:normal;color:var(--mute)}
+.g{display:flex;gap:10px;overflow-x:auto;margin-top:18px;padding-bottom:4px}
+.ph{position:relative;flex:none}.ph img{height:140px;border-radius:14px;display:block}
+.ph u{position:absolute;top:5px;right:5px;background:#000a;color:#fff;border-radius:12px;min-width:24px;height:24px;padding:0 6px;text-align:center;line-height:24px;text-decoration:none;font-size:13px}
+.add{flex:none;width:100px;height:140px;border:2px dashed var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--mute);cursor:pointer}.add input{display:none}
+.sm p{margin:18px 0 8px;color:var(--mute);font-size:13px;text-align:left}
+.r{display:flex;gap:6px;overflow-x:auto}
+.sc{flex:none;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:4px;width:68px;cursor:pointer;font-size:11px;line-height:1.2;color:var(--mute);text-align:center}
+.sc i{width:44px;height:44px;border-radius:50%;box-shadow:0 0 0 1px var(--line)}
+#lb{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:20}
+#lb img{max-width:94%;max-height:94%;border-radius:12px}
+.board{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px 16px 24px}
+.bt{font:500 28px "Cormorant Garamond",Georgia,serif;letter-spacing:2px;margin:0 6px 6px;display:flex;justify-content:space-between;align-items:baseline}
+.bt small{font:13px -apple-system,sans-serif;color:var(--mute);letter-spacing:0}
+.tips{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:20px 6px}
+.tip{border:0;background:none;padding:0;cursor:pointer;text-align:center;position:relative}
+.tip:active{transform:scale(.94)}
+.tip .t{width:52px;height:68px;margin:0 auto;border-radius:16px 16px 20px 20px/18px 18px 22px 22px;position:relative;box-shadow:inset 0 -5px 8px #0002,0 2px 5px #0002;overflow:hidden}
+.tip .t::after{content:"";position:absolute;left:14%;top:8%;width:26%;height:46%;border-radius:50%;background:linear-gradient(#fff9,#fff0);transform:rotate(12deg)}
+.tip i{display:block;font-style:normal;font-size:11px;color:var(--mute);margin-top:7px}
+.tip.out .t{opacity:.35}
+.fr{padding:18px 0}
+.fr+.fr{border-top:1px solid var(--line)}
+.fl{margin:0 0 14px 6px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);font-weight:500}
+.fr .tips{flex:1;display:flex;flex-wrap:wrap;gap:18px 6px}
+.fr .tip{width:66px}
+.add{flex-direction:column;gap:2px}.add small{font-size:12px}
+aside{background:rgba(246,236,232,.6)}
+.br{letter-spacing:.6px}
+.board{box-shadow:0 10px 34px rgba(120,80,80,.07);border-radius:26px}
+.tip .t{box-shadow:inset 0 -4px 7px #0001,0 3px 8px #5a3a3a22}
+.det h2,#md h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:.5px}
+.chip,.btn,#q{font-weight:400}
+@media (max-width:640px){body{flex-direction:column}aside{width:auto;flex-direction:row;border-right:0;border-bottom:1px solid var(--line);padding:10px;overflow-x:auto}aside h1{display:none}.br{flex:none;gap:8px}}
+</style>
+</head>
+<body>
+<aside id="side"></aside>
+<main>
+  <div class="top">
+    <div class="row"><input id="q" type="search" placeholder="Search shade # or name…"><button class="btn" id="vw">Card view</button><button class="btn" id="ed">Edit mode</button></div>
+    <div class="chips" id="chips"></div>
+    <div class="row" id="tools" style="display:none">
+      <button class="btn p" id="add">+ Add shade</button><button class="btn" id="bulk">Bulk add</button><button class="btn" id="nb">+ New brand</button><button class="btn" id="bk">Backup / Import</button>
+    </div>
+  </div>
+  <div id="grid"></div>
+</main>
+<div id="lb"></div><div id="ov"><div id="md"></div></div>
+<script>
+const K='nailbook-v2',FAMS=['All','Red','Pink','Nude','Orange / Yellow','Green','Blue','Purple','Brown','Black / White / Grey'],FIN=['Creme','Shimmer','Glitter','Cat-eye','Sheer'];
+let S,st={brand:'',fam:'All',q:'',edit:false,view:'board'};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function seed(){
+  const T='Number hidden on bottle; inferred from order, please verify';
+  const d={'OPI':[
+    ['184',"You've Got Nata on Me",'#d9776a','Creme','GC L17',''],
+    ['185','*Verified*','#9fb4dd','Creme','','Official code to verify (OPI Your Way)'],
+    ['186','Movie Buff','#d3b0d2','Creme','GC H003',''],
+    ['187','Suzi Shops & Island Hops','#d89ab8','Creme','GC H71',''],
+    ['203','AppointMINT Confirmed','#aedcb6','Creme','',T+'; official code to verify'],
+    ['204','Welcome to Your Whirl','#b9b7e6','Creme','',T+'; official code to verify'],
+    ['205','Gliterally Shimmer','#a9a998','Shimmer','',T+'; official code to verify'],
+    ['206','I Quit My Day Job','#cc74b6','Creme','','Official code to verify'],
+    ['207','Bright Where I Belong!','#d92f4f','Creme','GC S080',''],
+    ['209','Mexico City Move-mint','#bfe0e3','Creme','GC M83',''],
+    ['210','(Name hidden by label)','#e8826f','Creme','','Name to confirm'],
+    ['211',"OPI'm a Bubble Bunny",'#d6cbd4','Creme','','Official code to verify (The New OPIcons 2026)'],
+    ['No #','Bubble Bath','#efc4d3','Creme','GC S86','Hand-labeled on bottle, no number yet'],
+    ['212','Put It in Airplane Mode','#c9998a','Creme','GC S062','']],
+  'DND':[],'Angel Eye':[]};
+  S={brands:Object.keys(d),colors:[]};
+  for(const b in d)d[b].forEach((x,i)=>S.colors.push({id:'s2-'+b+i,brand:b,code:x[0],name:x[1],hex:x[2],fam:famOf(x[2]),finish:x[3],stock:true,oc:x[4],note:x[5]}));
+}
+function famOf(h){
+  const r=parseInt(h.slice(1,3),16)/255,g=parseInt(h.slice(3,5),16)/255,b=parseInt(h.slice(5,7),16)/255;
+  const mx=Math.max(r,g,b),mn=Math.min(r,g,b),l=(mx+mn)/2,dl=mx-mn;
+  const s=dl===0?0:dl/(1-Math.abs(2*l-1));let H=0;
+  if(dl){H=mx===r?((g-b)/dl)%6:mx===g?(b-r)/dl+2:(r-g)/dl+4;H=(H*60+360)%360}
+  if(s<.12||l<.13||l>.95)return'Black / White / Grey';
+  if(H<45||H>=330){if(l<.35&&H<45)return'Brown';if(l>.7)return s<.5&&H<45?'Nude':'Pink';if(H>=330||(H<15&&l>.55&&s<.65))return l>.5?'Pink':'Red';if(H>=15&&s<.5)return'Brown';return H<15?'Red':'Orange / Yellow'}
+  if(H<70)return l<.35?'Brown':'Orange / Yellow';
+  if(H<170)return'Green';if(H<260)return'Blue';return'Purple';
+}
+try{const r=localStorage.getItem(K);if(r)S=JSON.parse(r);else{seed();const o=JSON.parse(localStorage.getItem('nailbook-v1')||'null');if(o&&o.colors){o.colors.filter(c=>!/^示例/.test(c.name)).forEach(c=>S.colors.push(c));o.brands.forEach(b=>S.brands.includes(b)||S.brands.push(b))}}}catch(e){seed()}
+if(!S||!S.brands||!S.colors)seed();
+const FAMZ={'红':'Red','粉':'Pink','裸':'Nude','橙黄':'Orange / Yellow','棕':'Brown','绿':'Green','蓝':'Blue','紫':'Purple','黑白灰':'Black / White / Grey'},FINZ={'奶油':'Creme','珠光':'Shimmer','亮片':'Glitter','猫眼':'Cat-eye','透明':'Sheer'},
+TXZ=[['编号被遮挡，按瓶子顺序推测，请核对','Number hidden on bottle; inferred from order, please verify'],['官方色号待核对','Official code to verify'],['名称待确认','Name to confirm'],['瓶身手写名称，还没有编号','Hand-labeled on bottle, no number yet'],['（名称被标签遮住）','(Name hidden by label)'],['待编号','No #'],[' 系列',''],['；','; '],['（','('],['）',')']];
+S.colors.forEach(c=>{c.fam=FAMZ[c.fam]||c.fam;c.finish=FINZ[c.finish]||c.finish;['note','name','code'].forEach(k=>{let v=c[k]||'';TXZ.forEach(([a,b])=>v=v.split(a).join(b));c[k]=v})});
+st.brand=S.brands[0]||'';
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const $=id=>document.getElementById(id);
+
+function nailHTML(c,big){return`<div class="nail${big?' big':''} ${c.finish==='Glitter'?'glitter':''} ${c.finish==='Cat-eye'?'cat':''}" style="background-color:${esc(c.hex)}"></div>`}
+function render(){
+  $('side').innerHTML='<h1>Color Book</h1>'+S.brands.map(b=>`<button class="br ${b===st.brand?'on':''}" data-b="${esc(b)}">${esc(b)}<small>${S.colors.filter(c=>c.brand===b).length}</small></button>`).join('');
+  $('chips').innerHTML=FAMS.map(f=>`<button class="chip ${f===st.fam?'on':''}" data-f="${f}">${f}</button>`).join('');
+  const q=st.q.trim().toLowerCase();
+  const list=S.colors.filter(c=>c.brand===st.brand&&(st.fam==='All'||c.fam===st.fam)&&(!q||(c.code+c.name+(c.oc||'')).toLowerCase().includes(q)));
+  $('vw').textContent=st.view==='board'?'Card view':'Board view';
+  $('grid').className=st.view==='board'?'rib':'';
+  const none=`<div class="empty">${S.colors.some(c=>c.brand===st.brand)?'No shades found':'No shades yet. Turn on Edit mode, then tap Bulk add.'}</div>`;
+  if(st.view==='board'&&list.length){
+    const FO=['Pink','Red','Nude','Orange / Yellow','Brown','Green','Blue','Purple','Black / White / Grey'],fams=FO.filter(f=>list.some(c=>c.fam===f)).concat([...new Set(list.map(c=>c.fam))].filter(f=>!FO.includes(f)));
+    $('grid').innerHTML=`<div class="board"><div class="bt"><span>${esc(st.brand)}</span><small>${list.length} shades</small></div>`+fams.map(f=>`<div class="fr"><div class="fl">${esc(f)}</div><div class="tips">`+list.filter(c=>c.fam===f).sort((a,b)=>lum(b.hex)-lum(a.hex)).map(c=>`<button class="tip ${c.stock===false?'out':''}" data-id="${c.id}"><div class="t ${c.finish==='Glitter'?'glitter':''} ${c.finish==='Cat-eye'?'cat':''}" style="background-color:${esc(c.hex)}"></div><i>${esc(c.code)}</i></button>`).join('')+'</div></div>').join('')+'</div>';
+  }else $('grid').innerHTML=list.length?list.map(c=>`<button class="c ${c.stock===false?'out':''}" data-id="${c.id}">${c.np?`<em class="np">📷${c.np}</em>`:''}${nailHTML(c)}<b>${esc(c.code)}</b><span>${esc(c.name)}</span></button>`).join(''):none;
+  $('tools').style.display=st.edit?'flex':'none';
+  $('ed').className='btn'+(st.edit?' p':'');$('ed').textContent=st.edit?'Done':'Edit mode';
+}
+const open=h=>{$('md').innerHTML=h;$('ov').classList.add('on')},close=()=>$('ov').classList.remove('on');
+$('ov').onclick=e=>{if(e.target.id==='ov')close()};
+
+async function detail(id){
+  const c=S.colors.find(x=>x.id===id);if(!c)return;
+  const imgs=await getImgs(id);
+  const sim=S.colors.filter(x=>x.id!==id).map(x=>[x,dist(x.hex,c.hex)]).sort((a,b)=>a[1]-b[1]).slice(0,6).map(a=>a[0]);
+  open(`<div class="det">${nailHTML(c,1)}<h2>${esc(c.code)}</h2><p>${esc(c.name)}</p><p>${esc(c.brand)}${c.oc?' · Official '+esc(c.oc):''}</p>${c.note?`<p style="font-size:12px">${esc(c.note)}</p>`:''}
+  <span class="tag">${esc(c.fam)}</span><span class="tag">${esc(c.finish)}</span><span class="tag">${c.stock===false?'Out of stock':'In stock'}</span></div>
+  ${1?`<div class="g">${imgs.map(m=>`<div class="ph"><img src="${m.data}" data-p="1">${st.edit?`<u data-x="${m.id}" data-cid="${id}">×</u>`:''}</div>`).join('')}<label class="add"><span>+</span><small>Add photos</small><input type="file" accept="image/*" multiple id="pf"></label></div>`:''}
+  ${sim.length?`<div class="sm"><p>Similar shades</p><div class="r">${sim.map(x=>`<button class="sc" data-sid="${x.id}"><i style="background:${esc(x.hex)}"></i>${esc(x.brand)}<br>${esc(x.code)}</button>`).join('')}</div></div>`:''}
+  <div class="acts"><button class="btn" onclick="close_()">Close</button>${st.edit?`<button class="btn p" onclick="form('${c.id}')">Edit</button>`:''}</div>`);
+  const pf=$('pf');if(pf)pf.onchange=async()=>{
+    for(const f of pf.files)await putImg({id:'p'+Date.now()+Math.random().toString(36).slice(2,6),cid:id,data:await shrink(f)});
+    c.np=(await getImgs(id)).length;save();render();detail(id);
+  };
+}
+function form(id){
+  const c=id?S.colors.find(x=>x.id===id):{brand:st.brand,code:'',name:'',hex:'#c4161c',fam:'Red',finish:'Creme',stock:true};
+  open(`<h2>${id?'Edit shade':'Add shade'}</h2>
+  <div class="two"><label class="f">Brand<select id="fb">${S.brands.map(b=>`<option ${b===c.brand?'selected':''}>${esc(b)}</option>`).join('')}</select></label>
+  <label class="f">Shade #<input id="fc" value="${esc(c.code)}"></label></div>
+  <label class="f">Name<input id="fn" value="${esc(c.name)}"></label>
+  <div class="two"><label class="f">Official code (e.g. GC L17)<input id="fo" value="${esc(c.oc||'')}"></label><label class="f">Notes<input id="fm" value="${esc(c.note||'')}"></label></div>
+  <div class="two"><label class="f">Color (tap to pick)<input id="fh" type="color" value="${esc(c.hex)}"></label>
+  <label class="f">Family<select id="ff">${FAMS.slice(1).map(f=>`<option ${f===c.fam?'selected':''}>${f}</option>`).join('')}</select></label></div>
+  <div class="two"><label class="f">Finish<select id="fi">${FIN.map(f=>`<option ${f===c.finish?'selected':''}>${f}</option>`).join('')}</select></label>
+  <label class="f">Stock<select id="fs"><option value="1" ${c.stock!==false?'selected':''}>In stock</option><option value="0" ${c.stock===false?'selected':''}>Out of stock</option></select></label></div>
+  <div class="acts">${id?`<button class="btn d" id="del">Delete</button>`:''}<button class="btn" onclick="close_()">Cancel</button><button class="btn p" id="ok">Save</button></div>`);
+  $('fh').oninput=()=>{$('ff').value=famOf($('fh').value)};
+  $('ok').onclick=()=>{
+    const o={brand:$('fb').value,code:$('fc').value.trim(),name:$('fn').value.trim(),hex:$('fh').value,fam:$('ff').value,finish:$('fi').value,stock:$('fs').value==='1',oc:$('fo').value.trim(),note:$('fm').value.trim()};
+    if(!o.code&&!o.name){$('fc').focus();return}
+    if(id)Object.assign(c,o);else S.colors.push({id:'c'+Date.now(),...o});
+    st.brand=o.brand;save();close();render();
+  };
+  if(id)$('del').onclick=function(){
+    if(this.dataset.s){delAll(id);S.colors=S.colors.filter(x=>x.id!==id);save();close();render()}
+    else{this.dataset.s=1;this.textContent='Tap again to confirm'}
+  };
+}
+function bulk(){
+  open(`<h2>Bulk add to ${esc(st.brand)}</h2><p style="color:var(--mute);font-size:13px;margin:0 0 10px">One per line: shade #, name, #color, official code (last two optional)</p>
+  <label class="f"><textarea id="bt" placeholder="NL-010,Strawberry Red,#d02a3a&#10;NL-011,Milk White"></textarea></label>
+  <div class="acts"><button class="btn" onclick="close_()">Cancel</button><button class="btn p" id="ok">Add</button></div>`);
+  $('ok').onclick=()=>{
+    $('bt').value.split('\n').forEach((ln,i)=>{
+      const p=ln.split(/[,，\t]/).map(s=>s.trim());if(!p[0])return;
+      const hex=/^#[0-9a-f]{6}$/i.test(p[2]||'')?p[2]:'#dddddd';
+      S.colors.push({id:'c'+Date.now()+i,brand:st.brand,code:p[0],name:p[1]||'',hex,fam:famOf(hex),finish:'Creme',stock:true,oc:p[3]||''});
+    });save();close();render();
+  };
+}
+function newBrand(){
+  open(`<h2>New brand</h2><label class="f">Brand name<input id="nbn"></label>
+  <div class="acts">${S.brands.length>1?'<button class="btn d" id="rb">Delete this brand</button>':''}<button class="btn" onclick="close_()">Cancel</button><button class="btn p" id="ok">Add</button></div>`);
+  $('ok').onclick=()=>{const n=$('nbn').value.trim();if(!n||S.brands.includes(n))return;S.brands.push(n);st.brand=n;save();close();render()};
+  const rb=$('rb');if(rb)rb.onclick=function(){
+    if(this.dataset.s){S.colors.filter(c=>c.brand===st.brand).forEach(c=>delAll(c.id));S.colors=S.colors.filter(c=>c.brand!==st.brand);S.brands=S.brands.filter(b=>b!==st.brand);st.brand=S.brands[0];save();close();render()}
+    else{this.dataset.s=1;this.textContent='Deletes "'+st.brand+'" and all its shades. Tap again to confirm'}
+  };
+}
+function backup(){
+  open(`<h2>Backup / Import</h2><p style="color:var(--mute);font-size:13px;margin:0 0 10px">Copy the text below into Notes to back up. On a new device, paste it and tap Import (photos are not included).</p>
+  <label class="f"><textarea id="bj">${esc(JSON.stringify(S))}</textarea></label>
+  <div class="acts"><button class="btn" onclick="close_()">Close</button><button class="btn p" id="ok">Import (replaces current)</button></div>`);
+  $('ok').onclick=()=>{try{const n=JSON.parse($('bj').value);if(n.brands&&n.colors){S=n;st.brand=S.brands[0];save();close();render()}}catch(e){$('ok').textContent='Invalid format'}};
+}
+const lum=h=>.299*parseInt(h.slice(1,3),16)+.587*parseInt(h.slice(3,5),16)+.114*parseInt(h.slice(5,7),16);
+const dist=(a,b)=>{const f=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),x=f(a),y=f(b);return(x[0]-y[0])**2+(x[1]-y[1])**2+(x[2]-y[2])**2};
+let db;const idb=()=>db||(db=new Promise((ok,no)=>{try{const q=indexedDB.open('nailimgs',1);q.onupgradeneeded=()=>{q.result.createObjectStore('i',{keyPath:'id'}).createIndex('c','cid')};q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)}catch(e){no(e)}}));
+const tx=async(m,f)=>{const d=await idb();return new Promise((ok,no)=>{const t=d.transaction('i',m);const r=f(t.objectStore('i'));t.oncomplete=()=>ok(r&&r.result);t.onerror=()=>no(t.error)})};
+const getImgs=cid=>tx('readonly',s=>s.index('c').getAll(cid)).then(r=>r||[]).catch(()=>[]);
+const putImg=o=>tx('readwrite',s=>s.put(o)).catch(()=>{});
+const delImg=id=>tx('readwrite',s=>s.delete(id)).catch(()=>{});
+const delAll=async cid=>{for(const m of await getImgs(cid))await delImg(m.id)};
+const shrink=f=>new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=im.width*k;cv.height=im.height*k;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);res(cv.toDataURL('image/jpeg',.8))};im.src=r.result};r.readAsDataURL(f)});
+$('md').onclick=e=>{
+  const p=e.target.closest('[data-p]');if(p){$('lb').innerHTML=`<img src="${p.src}">`;$('lb').style.display='flex';return}
+  const x=e.target.closest('[data-x]');
+  if(x){if(x.dataset.s){const cid=x.dataset.cid;delImg(x.dataset.x).then(async()=>{const c=S.colors.find(z=>z.id===cid);c.np=(await getImgs(cid)).length;save();render();detail(cid)})}else{x.dataset.s=1;x.style.background='#c0392b';x.textContent='Delete'}return}
+  const s=e.target.closest('[data-sid]');if(s)detail(s.dataset.sid);
+};
+$('lb').onclick=()=>{$('lb').style.display='none'};
+$('vw').onclick=()=>{st.view=st.view==='board'?'grid':'board';render()};
+window.close_=close;window.form=form;
+$('side').onclick=e=>{const b=e.target.closest('[data-b]');if(b){st.brand=b.dataset.b;render()}};
+$('chips').onclick=e=>{const b=e.target.closest('[data-f]');if(b){st.fam=b.dataset.f;render()}};
+$('grid').onclick=e=>{const b=e.target.closest('[data-id]');if(b)detail(b.dataset.id)};
+$('q').oninput=e=>{st.q=e.target.value;render()};
+$('ed').onclick=()=>{st.edit=!st.edit;render()};
+$('add').onclick=()=>form();$('bulk').onclick=bulk;$('nb').onclick=newBrand;$('bk').onclick=backup;
+render();
+</script>
+</body>
+</html>
