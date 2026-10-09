@@ -77,13 +77,13 @@ main{flex:1;min-width:0;display:flex;flex-direction:column}
 .tip:active{transform:scale(.94)}
 .tip .t{width:52px;height:68px;margin:0 auto;border-radius:16px 16px 20px 20px/18px 18px 22px 22px;position:relative;box-shadow:inset 0 -5px 8px #0002,0 2px 5px #0002;overflow:hidden}
 .tip .t::after{content:"";position:absolute;left:14%;top:8%;width:26%;height:46%;border-radius:50%;background:linear-gradient(#fff9,#fff0);transform:rotate(12deg)}
-.tip i{display:block;font-style:normal;font-size:11px;color:var(--mute);margin-top:7px}
+.tip i{display:block;font-style:normal;font-size:11px;line-height:1.25;color:var(--mute);margin-top:7px}
 .tip.out .t{opacity:.35}
 .fr{padding:18px 0}
 .fr+.fr{border-top:1px solid var(--line)}
 .fl{margin:0 0 14px 6px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);font-weight:500}
 .fr .tips{flex:1;display:flex;flex-wrap:wrap;gap:18px 6px}
-.fr .tip{width:66px}
+.fr .tip{width:82px}
 .add{flex-direction:column;gap:2px}.add small{font-size:12px}
 aside{background:rgba(246,236,232,.6)}
 .br{letter-spacing:.6px}
@@ -162,8 +162,8 @@ function render(){
   const none=`<div class="empty">${S.colors.some(c=>c.brand===st.brand)?'No shades found':'No shades yet. Turn on Edit mode, then tap Bulk add.'}</div>`;
   if(st.view==='board'&&list.length){
     const FO=['Pink','Red','Nude','Orange / Yellow','Brown','Green','Blue','Purple','Black / White / Grey'],fams=FO.filter(f=>list.some(c=>c.fam===f)).concat([...new Set(list.map(c=>c.fam))].filter(f=>!FO.includes(f)));
-    $('grid').innerHTML=`<div class="board"><div class="bt"><span>${esc(st.brand)}</span><small>${list.length} shades</small></div>`+fams.map(f=>`<div class="fr"><div class="fl">${esc(f)}</div><div class="tips">`+list.filter(c=>c.fam===f).sort((a,b)=>lum(b.hex)-lum(a.hex)).map(c=>`<button class="tip ${c.stock===false?'out':''}" data-id="${c.id}"><div class="t ${c.finish==='Glitter'?'glitter':''} ${c.finish==='Cat-eye'?'cat':''}" style="background-color:${esc(c.hex)}"></div><i>${esc(c.code)}</i></button>`).join('')+'</div></div>').join('')+'</div>';
-  }else $('grid').innerHTML=list.length?list.map(c=>`<button class="c ${c.stock===false?'out':''}" data-id="${c.id}">${c.np?`<em class="np">📷${c.np}</em>`:''}${nailHTML(c)}<b>${esc(c.code)}</b><span>${esc(c.name)}</span></button>`).join(''):none;
+    $('grid').innerHTML=`<div class="board"><div class="bt"><span>${esc(st.brand)}</span><small>${list.length} shades</small></div>`+fams.map(f=>`<div class="fr"><div class="fl">${esc(f)}</div><div class="tips">`+list.filter(c=>c.fam===f).sort((a,b)=>lum(b.hex)-lum(a.hex)).map(c=>`<button class="tip ${c.stock===false?'out':''}" data-id="${c.id}"><div class="t ${c.finish==='Glitter'?'glitter':''} ${c.finish==='Cat-eye'?'cat':''}" style="background-color:${esc(c.hex)}"></div><i>${esc(c.name||c.code)}</i></button>`).join('')+'</div></div>').join('')+'</div>';
+  }else $('grid').innerHTML=list.length?list.map(c=>`<button class="c ${c.stock===false?'out':''}" data-id="${c.id}">${c.np?`<em class="np">📷${c.np}</em>`:''}${nailHTML(c)}<b>${esc(c.name||c.code)}</b><span>${esc(c.code)}</span></button>`).join(''):none;
   $('tools').style.display=st.edit?'flex':'none';
   $('ed').className='btn'+(st.edit?' p':'');$('ed').textContent=st.edit?'Done':'Edit mode';
 }
